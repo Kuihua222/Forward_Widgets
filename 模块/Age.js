@@ -2,7 +2,7 @@ var WidgetMetadata = {
     id: "agedm_widget",
     title: "AGE动漫 Widget",
     description: "与 AGE动漫 网站交互的 Widget，支持获取动漫列表和搜索动漫",
-    author: "K", // 请替换为您的名字
+    author: "KH", 
     site: "https://m.agedm.org",
     version: "1.0.0",
     requiredVersion: "0.0.1",
@@ -46,7 +46,7 @@ async function getAnimeList(params = {}) {
         const docId = Widget.dom.parse(response.data);
         // Update selector based on actual website structure (e.g., '.anime-item' or '.list-item')
         // Open https://m.agedm.org in browser, inspect elements, and find the correct class
-        const animeElements = Widget.dom.select(docId, "video_list_box--bd"); // Replace '.list-item' with actual class
+        const animeElements = Widget.dom.select(docId, ".list-item"); // Replace '.list-item' with actual class
 
         if (!animeElements || animeElements.length === 0) {
             console.warn("No anime elements found. Check selector or dynamic content.");
