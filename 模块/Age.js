@@ -1,120 +1,108 @@
+// 模块/AgeFans.js
+
 var WidgetMetadata = {
-    id: "agedm_widget",
-    title: "AGE动漫 Widget",
-    description: "与 AGE动漫 网站交互的 Widget，支持获取动漫列表和搜索动漫",
-    author: "KH", 
-    site: "https://m.agedm.org",
-    version: "1.0.0",
-    requiredVersion: "0.0.1",
-    modules: [
+  id: "agefans_widget",
+  title: "AgeFans.la Widget",
+  description: "与 AgeFans.la 网站交互，支持获取首页动漫列表和搜索动漫",
+  author: "KH",
+  site: "https://www.agefans.la",
+  version: "1.0.0",
+  requiredVersion: "0.0.1",
+  modules: [
+    {
+      title: "获取首页动漫列表",
+      description: "抓取 AgeFans 首页最新动漫",
+      requiresWebView: false,
+      functionName: "getAnimeList",
+      sectionMode: false,
+      params: []
+    },
+    {
+      title: "搜索动漫",
+      description: "在 AgeFans 中搜索动漫",
+      requiresWebView: false,
+      functionName: "searchAnime",
+      params: [
         {
-            title: "获取动漫列表",
-            description: "从 AGE动漫 获取动漫列表",
-            requiresWebView: false,
-            functionName: "getAnimeList",
-            sectionMode: false,
-            params: []
-        },
-        {
-            title: "搜索动漫",
-            description: "在 AGE动漫 中搜索动漫",
-            requiresWebView: false,
-            functionName: "searchAnime",
-            params: [
-                {
-                    name: "query",
-                    title: "搜索关键词",
-                    type: "input",
-                    description: "输入动漫名称",
-                    value: ""
-                }
-            ]
+          name: "query",
+          title: "搜索关键词",
+          type: "input",
+          description: "输入动漫名称",
+          value: ""
         }
-    ]
+      ]
+    }
+  ]
 };
 
 async function getAnimeList(params = {}) {
-    try {
-        const url = "https://m.agedm.org";
-        const response = await Widget.http.get(url, {
-            headers: {
-                "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
-                "Referer": "https://m.agedm.org"
-            }
-        });
-
-        const docId = Widget.dom.parse(response.data);
-        // Update selector based on actual website structure (e.g., '.anime-item' or '.list-item')
-        // Open https://m.agedm.org in browser, inspect elements, and find the correct class
-        const animeElements = Widget.dom.select(docId, ".list-item"); // Replace '.list-item' with actual class
-
-        if (!animeElements || animeElements.length === 0) {
-            console.warn("No anime elements found. Check selector or dynamic content.");
-            return [];
-        }
-
-        return animeElements.map(element => {
-            // Update selectors for title and cover image
-            const titleElement = Widget.dom.selectFirst(element, ".anime-title"); // Replace with actual class
-            const coverElement = Widget.dom.selectFirst(element, ".anime-poster"); // Replace with actual class
-            const title = titleElement ? Widget.dom.text(titleElement).trim() : "未知标题";
-            const coverUrl = coverElement ? Widget.dom.attr(coverElement, "src") : "";
-            const id = Widget.dom.attr(element, "href") || "unknown_id"; // Use link as ID
-            return {
-                id: id,
-                type: "url",
-                title: title,
-                coverUrl: coverUrl,
-                description: "来自 AGE动漫"
-            };
-        });
-    } catch (error) {
-        console.error("获取动漫列表失败:", error.message);
-        throw error;
+  try {
+    const url = "https://www.agefans.la";
+    const response = await Widget.http.get(url, {
+      headers: {
+        "User-Agent": navigator.userAgent,
+        "Referer": "https://www.agefans.la"
+      }
+    });
+    const docId = Widget.dom.parse(response.data);
+    // 请根据实际页面结构调整以下 selector
+    const animeElements = Widget.dom.select(docId, ".vodlist li");
+    if (!animeElements || animeElements.length === 0) {
+      console.warn("未找到任何列表项，请检查 selector");
+      return [];
     }
+    return animeElements.map(el => {
+      const linkEl = Widget.dom.selectFirst(el, "a");
+      const titleEl = Widget.dom.selectFirst(el, ".title");
+      const imgEl   = Widget.dom.selectFirst(el, "img");
+      const href    = Widget.dom.attr(linkEl, "href") || "";
+      return {
+        id: href,
+        type: "url",
+        title: titleEl ? Widget.dom.text(titleEl).trim() : "未知标题",
+        coverUrl: imgEl ? Widget.dom.attr(imgEl, "src") : "",
+        description: "来自 AgeFans"
+      };
+    });
+  } catch (error) {
+    console.error("getAnimeList 失败：", error.message);
+    throw error;
+  }
 }
 
 async function searchAnime(params = {}) {
-    try {
-        const query = params.query;
-        if (!query) {
-            throw new Error("缺少搜索关键词");
-        }
-
-        const url = `https://m.agedm.org/vodsearch/${encodeURIComponent(query)}.html`;
-        const response = await Widget.http.get(url, {
-            headers: {
-                "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
-                "Referer": "https://m.agedm.org"
-            }
-        });
-
-        const docId = Widget.dom.parse(response.data);
-        // Update selector based on actual search results structure
-        const animeElements = Widget.dom.select(docId, ".list-item"); // Replace '.list-item' with actual class
-
-        if (!animeElements || animeElements.length === 0) {
-            console.warn("No search results found. Check selector or dynamic content.");
-            return [];
-        }
-
-        return animeElements.map(element => {
-            // Update selectors for title and cover image
-            const titleElement = Widget.dom.selectFirst(element, ".anime-title"); // Replace with actual class
-            const coverElement = Widget.dom.selectFirst(element, ".anime-poster"); // Replace with actual class
-            const title = titleElement ? Widget.dom.text(titleElement).trim() : "未知标题";
-            const coverUrl = coverElement ? Widget.dom.attr(coverElement, "src") : "";
-            const id = Widget.dom.attr(element, "href") || "unknown_id"; // Use link as ID
-            return {
-                id: id,
-                type: "url",
-                title: title,
-                coverUrl: coverUrl,
-                description: "搜索结果 - AGE动漫"
-            };
-        });
-    } catch (error) {
-        console.error("搜索动漫失败:", error.message);
-        throw error;
+  try {
+    const kw = params.query;
+    if (!kw) throw new Error("缺少搜索关键词");
+    // AgeFans 的搜索 URL 模板，请根据实际情况微调
+    const url = `https://www.agefans.la/index.php?m=vod-search-wd-${encodeURIComponent(kw)}-pg-1.html`;
+    const response = await Widget.http.get(url, {
+      headers: {
+        "User-Agent": navigator.userAgent,
+        "Referer": "https://www.agefans.la"
+      }
+    });
+    const docId = Widget.dom.parse(response.data);
+    const animeElements = Widget.dom.select(docId, ".vodlist li");
+    if (!animeElements || animeElements.length === 0) {
+      console.warn("搜索无结果，请检查 selector 或关键词");
+      return [];
     }
+    return animeElements.map(el => {
+      const linkEl = Widget.dom.selectFirst(el, "a");
+      const titleEl = Widget.dom.selectFirst(el, ".title");
+      const imgEl   = Widget.dom.selectFirst(el, "img");
+      const href    = Widget.dom.attr(linkEl, "href") || "";
+      return {
+        id: href,
+        type: "url",
+        title: titleEl ? Widget.dom.text(titleEl).trim() : "未知标题",
+        coverUrl: imgEl ? Widget.dom.attr(imgEl, "src") : "",
+        description: "搜索结果 - AgeFans"
+      };
+    });
+  } catch (error) {
+    console.error("searchAnime 失败：", error.message);
+    throw error;
+  }
 }
