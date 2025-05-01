@@ -40,20 +40,20 @@ async function getAnimeList(params = {}) {
     const url = "https://www.agefans.la";
     const response = await Widget.http.get(url, {
       headers: {
-        "User-Agent": navigator.userAgent,
+        "User-Agent": "Mozilla/5.0 (ForwardWidget)",
         "Referer": "https://www.agefans.la"
       }
     });
     const docId = Widget.dom.parse(response.data);
     // 请根据实际页面结构调整以下 selector
-    const animeElements = Widget.dom.select(docId, ".vodlist li");
+    const animeElements = Widget.dom.select(docId, ".video_list_box recent_update li");
     if (!animeElements || animeElements.length === 0) {
       console.warn("未找到任何列表项，请检查 selector");
       return [];
     }
     return animeElements.map(el => {
       const linkEl = Widget.dom.selectFirst(el, "a");
-      const titleEl = Widget.dom.selectFirst(el, ".title");
+      const titleEl = Widget.dom.selectFirst(el, ".class="video_item-title text-truncate text-center py-2"");
       const imgEl   = Widget.dom.selectFirst(el, "img");
       const href    = Widget.dom.attr(linkEl, "href") || "";
       return {
@@ -78,7 +78,7 @@ async function searchAnime(params = {}) {
     const url = `https://www.agefans.la/index.php?m=vod-search-wd-${encodeURIComponent(kw)}-pg-1.html`;
     const response = await Widget.http.get(url, {
       headers: {
-        "User-Agent": navigator.userAgent,
+        "User-Agent": "Mozilla/5.0 (ForwardWidget)",
         "Referer": "https://www.agefans.la"
       }
     });
