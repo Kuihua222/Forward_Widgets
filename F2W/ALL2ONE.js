@@ -1,5 +1,5 @@
 WidgetMetadata = {
-    id: "FW2ALL.lists",
+    id: "ALL2ONE",
     title: "聚合内容",
     description: "聚合（豆瓣、TMDB、IMDB、Bangumi内容）",
     author: "gpt",
