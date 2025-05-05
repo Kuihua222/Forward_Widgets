@@ -5,7 +5,7 @@
   "widgets": [
     {
       "id": "agefans_widget",
-      "title": "Age",
+      "title": "AgeFans.la Widget",
       "description": "支持获取最新动漫列表和搜索动漫",
       "requiredVersion": "0.0.1",
       "version": "1.2.0",
