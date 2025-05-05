@@ -3,7 +3,7 @@ WidgetMetadata = {
     title: "聚合内容",
     description: "聚合（豆瓣、TMDB、IMDB、Bangumi内容）",
     author: "gpt",
-    version: "1.3.0",
+    version: "1.1.1",
     modules: [
         // ======================
         // 🌟 实时热门榜单
