@@ -1,18 +1,10 @@
 {
   "title": "FW2ONE",
   "description": "自用FW模块集合",
-  "icon": "https://raw.githubusercontent.com/Kuihua222/FW-Widgets/refs/heads/main/icon.png",
+  "icon": "https://raw.githubusercontent.com/Kuihua222/Forward_Widgets/master/icon.png",
   "widgets": [
+    
     {
-      "id": "jable",
-      "title": "Jable",
-      "description": "获取Jable热门影片榜单",
-      "requiredVersion": "0.0.1",
-      "version": "1.0.2",
-      "author": "nibiru",
-      "url": "https://raw.githubusercontent.com/quantumultxx/FW-Widgets/refs/heads/main/Widgets/jable.js"
-    },
-	{
       "id": "douban",
       "title": "豆瓣我看&豆瓣个性化推荐",
       "description": "解析豆瓣想看、在看、已看以及根据个人数据生成的个性化推荐",
