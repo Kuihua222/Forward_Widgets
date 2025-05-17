@@ -1,34 +1,61 @@
 {
-  "title": "FW2S",
-  "description": "by kh",
-  "icon": "https://raw.githubusercontent.com/Kuihua222/Forward_Widgets/main/icon.png",
+  "title": "FW2ONE",
+  "description": "自用FW模块集合",
+  "icon": "https://raw.githubusercontent.com/Kuihua222/FW-Widgets/refs/heads/main/icon.png",
   "widgets": [
     {
-      "id": "agefans_widget",
-      "title": "Age",
-      "description": "支持获取最新动漫列表和搜索动漫",
+      "id": "jable",
+      "title": "Jable",
+      "description": "获取Jable热门影片榜单",
       "requiredVersion": "0.0.1",
-      "version": "1.1.1",
-      "author": "kh",
-      "url": "https://raw.githubusercontent.com/Kuihua222/Forward_Widgets/main/F2W/Age.js"
-    }，
-    {
-      "id": "Movie2Now",
-      "title": "实时院线",
-      "description": "实时院线电影（上映中/待上映）",
+      "version": "1.0.2",
+      "author": "nibiru",
+      "url": "https://raw.githubusercontent.com/quantumultxx/FW-Widgets/refs/heads/main/Widgets/jable.js"
+    },
+	{
+      "id": "douban",
+      "title": "豆瓣我看&豆瓣个性化推荐",
+      "description": "解析豆瓣想看、在看、已看以及根据个人数据生成的个性化推荐",
       "requiredVersion": "0.0.1",
-      "version": "1.1.1",
-      "author": "两块",
-      "url": "https://raw.githubusercontent.com/Kuihua222/Forward_Widgets/main/F2W/Movie2Now.js"
+      "version": "1.0.2",
+      "author": "huangxd",
+      "url": "https://raw.githubusercontent.com/huangxd-/ForwardWidgets/refs/heads/main/widgets/douban.js"
     },
     {
-      "id": "ALL2ONE",
-      "title": "聚合内容",
-      "description": "聚合（豆瓣、TMDB、IMDB、Bangumi内容）",
+      "id": "trakt",
+      "title": "Trakt",
+      "description": "解析Trakt想看、在看、已看、片单、追剧日历以及根据个人数据生成的个性化推荐",
       "requiredVersion": "0.0.1",
-      "version": "1.1.1",
-      "author": "k",
-      "url": "https://raw.githubusercontent.com/Kuihua222/Forward_Widgets/main/F2W/ALL2ONE.js"
+      "version": "1.0.9",
+      "author": "huangxd",
+      "url": "https://raw.githubusercontent.com/huangxd-/ForwardWidgets/refs/heads/main/widgets/trakt.js"
+    },
+    {
+      "id": "imdb",
+      "title": "IMDB",
+      "description": "IMDB",
+      "requiredVersion": "0.0.1",
+      "version": "1.0.0",
+      "author": "pack1r",
+      "url": "https://raw.githubusercontent.com/pack1r/ForwardWidgets/refs/heads/main/widgets/imdb.js"
+    },
+    {
+      "id": "hot_picks",
+      "title": "热门精选",
+      "description": "获取最新热播剧和热门影片推荐",
+      "requiredVersion": "0.0.1",
+      "version": "1.0.7",
+      "author": "两块",
+      "url": "https://raw.githubusercontent.com/2kuai/ForwardWidgets/refs/heads/main/Widgets/HotPicks.js"
+    },
+    {
+      "id": "forward.combined.media.lists",
+      "title": "榜单聚合",
+      "description": "获取豆瓣、TMDB和IMDB的影视动画榜单",
+      "requiredVersion": "0.0.1",
+      "version": "1.2.3",
+      "author": "阿米诺斯",
+      "url": "https://raw.githubusercontent.com/quantumultxx/FW-Widgets/refs/heads/main/Widgets/ForwardWidgets.js"
     }
   ]
 }
